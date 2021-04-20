@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 const Header = () => {
 
-    // routing 
     const router = useRouter();
     
     const redireccionar = () => {
@@ -51,7 +50,6 @@ const Header = () => {
 
                     </div>
                                       
-
                 </div>
             </nav>                               
         </div>

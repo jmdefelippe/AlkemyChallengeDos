@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
-import Swal from 'sweetalert2';
 
 import Alerta from '../components/Alerta';
 import Layout from '../components/Layout';
@@ -12,20 +11,18 @@ import postContext from '../context/posts/postContext';
 
 const CrearPost = () => {
   
-  // Next router
   const router = useRouter();
 
   const PostContext = useContext(postContext);
-  const { mensaje, agregarPost } = PostContext;
+  const { message, createPost } = PostContext;
 
   useEffect(() => {
-   
-    if (mensaje.categoria === 'alerta-ok') {
-      router.push('/');
-    }
-      
-    // eslint-disable-next-line
-  }, [mensaje]);
+      if (message.category === 'alert-ok') {
+        router.push('/');
+      }
+        
+      // eslint-disable-next-line
+  }, [message]);
 
   // Formulario y validación con formik y Yup
   const formik = useFormik({
@@ -40,10 +37,9 @@ const CrearPost = () => {
                 .required('Body required')
       }),
       onSubmit: valores => {
-          agregarPost(valores);
+          createPost(valores);
       }
   });
-
 
   return (
     <Layout>
@@ -107,7 +103,7 @@ const CrearPost = () => {
                         value="Crear Post"
                       />
 
-                      { (mensaje.categoria === 'alerta-error') && <Alerta msg={mensaje.msg} categoria={mensaje.categoria} /> }
+                      { (message.category === 'alert-error') && <Alerta msg={message.msg} category={message.category} /> }
 
                   </form>
               </div>

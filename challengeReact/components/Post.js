@@ -7,28 +7,24 @@ import postContext from '../context/posts/postContext';
 
 const Post = ({ post }) => {
 
-    // Next router
     const router = useRouter();
 
-    // obtener la función del context de posts
     const postsContext = useContext(postContext);
-    const { obtenerPost, postActual, eliminarPost } = postsContext;
+    const { getPost, selectPost, deletePost } = postsContext;
 
     const { id, title } = post;
  
-    const detallesPost = id => {
-        obtenerPost(id);
+    const detailsPost = id => {
+        getPost(id);
         router.push('/detalle');
     }
 
-    const editarPost = post => {
-        postActual(post);
+    const updatePost = post => {
+        selectPost(post);
         router.push('/editarpost');
     }
 
-    // confirmar si desea eliminarlo
-    const confirmarEliminarPost = id => {
-        // preguntar al usuario
+    const confirmDeletePost = id => {
         Swal.fire({
             title: 'Estás seguro?',
             text: "Un post que se elimina no se puede recuperar",
@@ -45,10 +41,9 @@ const Post = ({ post }) => {
             hideClass: {
                 popup: 'animate__animated animate__fadeOutUp'
             }
-
         }).then((result) => {
             if (result.isConfirmed) {
-                eliminarPost(id);
+                deletePost(id);
             }
         })
     }
@@ -59,18 +54,18 @@ const Post = ({ post }) => {
             
             <img 
                 className="w-6 mr-5 cursor-pointer" src="/detalles.png"
-                onClick={ () => detallesPost(id) }
+                onClick={ () => detailsPost(id) }
             />
 
             <img 
                 className="w-6 mr-5 cursor-pointer" src="/editar.png"
-                onClick={ () => editarPost(id) }
+                onClick={ () => updatePost(id) }
             />
 
             <img 
                 className="w-6 cursor-pointer" src="/eliminar.png"
                 //onClick={() => eliminar() }
-                onClick={() => confirmarEliminarPost(id)}
+                onClick={() => confirmDeletePost(id)}
             />
 
         </div>

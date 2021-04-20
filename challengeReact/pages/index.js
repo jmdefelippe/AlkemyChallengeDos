@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 import Swal from 'sweetalert2';
 
@@ -10,32 +9,40 @@ import postContext from '../context/posts/postContext';
 
 const Index = () => {
 
-    // routing 
-    const router = useRouter();
-
-    // extraer posts de state inicial
     const postsContext = useContext(postContext);
-    const { posts, mensaje } = postsContext;
+    const { message } = postsContext;
 
     useEffect(() => {
       
-      if (mensaje.categoria === 'alerta-ok') {
+      if (message.category === 'alert-ok') {
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: mensaje.msg,
+            title: message.msg,
             width: 400,
             timer: 3000,
             confirmButtonColor: '#60A5FA',
             confirmButtonText: 'Ok!',
         })
-    }
+      }
+
+      if (message.category === 'alert-error') {
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: message.msg,
+            width: 400,
+            timer: 3000,
+            confirmButtonColor: '#60A5FA',
+            confirmButtonText: 'Ok!',
+        })
+      }
+    
       // eslint-disable-next-line
-  }, [mensaje]);
+  }, [message]);
 
     return ( 
         <div>
-            
             <Layout>
                 <div className="md:w-4/5 xl:w-4/5 mx-auto">
                   
@@ -48,8 +55,6 @@ const Index = () => {
                 
                 </div>
             </Layout>
-                
-
         </div>
   );
 }

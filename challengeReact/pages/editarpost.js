@@ -12,11 +12,10 @@ import postContext from '../context/posts/postContext';
 
 const editarPost = () => {
   
-  // Next router
   const router = useRouter();
 
   const PostContext = useContext(postContext);
-  let { mensaje, post, actualizarPost } = PostContext;
+  let { message, post, updatePost } = PostContext;
 
   post[0] = post[0] || [{}];
 
@@ -36,12 +35,12 @@ const editarPost = () => {
           router.push('/');
       }
 
-      if (mensaje.categoria === 'alerta-ok') {
+      if (message.category === 'alert-ok') {
           router.push('/');
       }
   
       // eslint-disable-next-line
-  }, [mensaje, post]);
+  }, [message, post]);
 
   // Formulario y validación con formik y Yup
   const formik = useFormik({
@@ -58,7 +57,7 @@ const editarPost = () => {
                 .required('Body required')
       }),
       onSubmit: valores => {
-          actualizarPost(valores);
+          updatePost(valores);
       }
   });
 
@@ -124,7 +123,7 @@ const editarPost = () => {
                         value="Editar Post"
                       />
 
-                      { (mensaje.categoria === 'alerta-error') && <Alerta msg={mensaje.msg} categoria={mensaje.categoria} /> }
+                      { (message.category === 'alert-error') && <Alerta msg={message.msg} category={message.category} /> }
 
                   </form>
               </div>

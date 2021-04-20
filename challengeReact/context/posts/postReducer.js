@@ -1,64 +1,63 @@
 import {
-    OBTENER_POSTS,
-    OBTENER_POST,
-    AGREGAR_POST,
-    POST_EXITOSO,
-    OCULTAR_ALERTA,
+    GET_POSTS,
+    GET_POST,
+    CREATE_POST,
+    POST_OK,
+    HIDE_ALERT,
     POST_ERROR,
-    POST_ACTUAL,
-    ELIMINAR_POST,
-    ACTUALIZAR_POST
+    SELECT_POST,
+    DELETE_POST,
+    UPDATE_POST
 } from '../../types';
 
 export default (state, action) => {
     switch(action.type) {
-        case OBTENER_POSTS:
+        case GET_POSTS:
             return {
                 ...state,
                 posts: action.payload
             }
-        case OBTENER_POST:
+        case GET_POST:
             return {
                 ...state,
                 post: action.payload
             }
-        case AGREGAR_POST:
+        case CREATE_POST:
             return {
                 ...state,
                 posts: [...state.posts, action.payload],
                 formulario: false,
                 errorformulario: false
             }
-        case POST_ACTUAL:
+        case SELECT_POST:
             return {
                 ...state,
                 post: state.posts.filter(post => post.id ===
                 action.payload)
             }
-        case ACTUALIZAR_POST:
+        case UPDATE_POST:
             return {
                 ...state,
                 posts: state.posts.map(post => post.id === action.payload.id
                 ? action.payload : post)
             }
-        case ELIMINAR_POST:
+        case DELETE_POST:
             return {
                 ...state,
                 posts: state.posts.filter(post => post.id !==
                 action.payload),
                 post: null,
-                alerta: action.payload
             }
-        case OCULTAR_ALERTA:
+        case HIDE_ALERT:
             return {
                 ...state,
-                mensaje: {}
+                message: {}
             } 
-        case POST_EXITOSO:
+        case POST_OK:
         case POST_ERROR:
             return {
                 ...state,
-                mensaje: action.payload
+                message: action.payload
             }
         default:
             return state;

@@ -6,14 +6,14 @@ import postContext from '../context/posts/postContext';
 
 const ListadoPosts = () => {
 
-    // extraer posts de state inicial
     const postsContext = useContext(postContext);
-    const { posts, mensaje, obtenerPosts } = postsContext;
+    const { posts, message, getPosts } = postsContext;
 
     useEffect(() => {
-        obtenerPosts();
+        getPosts();
+
         // eslint-disable-next-line
-    }, [mensaje]);
+    }, [message]);
 
     return (
         <div>

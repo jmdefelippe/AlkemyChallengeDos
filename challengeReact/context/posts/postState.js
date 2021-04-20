@@ -3,15 +3,15 @@ import React, { useReducer } from 'react';
 import postContext from './postContext';
 import postReducer from './postReducer';
 import {
-    OBTENER_POSTS,
-    OBTENER_POST,
-    AGREGAR_POST,
-    POST_EXITOSO,
+    GET_POSTS,
+    GET_POST,
+    CREATE_POST,
+    POST_OK,
     POST_ERROR,
-    OCULTAR_ALERTA,
-    POST_ACTUAL,
-    ELIMINAR_POST,
-    ACTUALIZAR_POST
+    HIDE_ALERT,
+    SELECT_POST,
+    DELETE_POST,
+    UPDATE_POST
 } from '../../types';
 
 import clienteAxios from '../../config/axios';
@@ -21,7 +21,7 @@ const PostState = props => {
     const initialState = {
         posts : [],
         post: [{}],
-        mensaje: {}
+        message: {}
     }
 
     const timeOut = 2000;
@@ -29,176 +29,172 @@ const PostState = props => {
     // dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(postReducer, initialState);
 
-    // obtener los posts
-    const obtenerPosts = async () => {
+    // obtener todos los posts
+    const getPosts = async () => {
         try {
             const url = `https://jsonplaceholder.typicode.com/posts`;
-            const resultado = await clienteAxios.get(url);
+            const result = await clienteAxios.get(url);
             
             dispatch({
-                type: OBTENER_POSTS,
-                payload: resultado.data
+                type: GET_POSTS,
+                payload: result.data
             });
         } catch (error) {
-            const alerta = {
+            const alert = {
                 msg: 'Hubo un error',
-                categoria: 'alerta-error'
+                category: 'alert-error'
             }
             dispatch({
                 type: POST_ERROR,
-                payload: alerta
+                payload: alert
             })
         }
     }
 
     // obtener post por id
-    const obtenerPost = async id => {
+    const getPost = async id => {
         try {
             const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
-            const resultado = await clienteAxios.get(url);
+            const result = await clienteAxios.get(url);
             
             dispatch({
-                type: OBTENER_POST,
-                payload: resultado.data
+                type: GET_POST,
+                payload: result.data
             });
         } catch (error) {
-            const alerta = {
+            const alert = {
                 msg: 'Hubo un error',
-                categoria: 'alerta-error'
+                category: 'alert-error'
             }
             dispatch({
                 type: POST_ERROR,
-                payload: alerta
+                payload: alert
             })
         }
     }
     
-    // agregar nueva post
-    const agregarPost = async post => {
-
+    // crear nuevo post
+    const createPost = async post => {
         try {
 
             const url = `https://jsonplaceholder.typicode.com/posts`;
-            const resultado = await clienteAxios.post(url, post);
+            const result = await clienteAxios.post(url, post);
             
-            const alerta = {
+            const alert = {
                 msg: 'Post agregado exitosamente',
-                categoria: 'alerta-ok'
+                category: 'alert-ok'
             }
             
             dispatch({
-                type: POST_EXITOSO,
-                payload: alerta
+                type: POST_OK,
+                payload: alert
             })
 
             // insertar el post en el state
             dispatch({
-                type: AGREGAR_POST,
-                payload: resultado.data
+                type: CREATE_POST,
+                payload: result.data
             })
         } catch (error) {
-            const alerta = {
+            const alert = {
                 msg: 'Hubo un error',
-                categoria: 'alerta-error'
+                category: 'alert-error'
             }
             dispatch({
                 type: POST_ERROR,
-                payload: alerta
+                payload: alert
             })
         }
 
-        // Limpia la alerta después de 3 segundos
         setTimeout(() => {
             dispatch({
-                type: OCULTAR_ALERTA
+                type: HIDE_ALERT
             })
         }, timeOut); 
     }
 
     // selecciona el post que el usuario dio click
-    const postActual = postId => {
+    const selectPost = postId => {
         dispatch({
-            type: POST_ACTUAL,
+            type: SELECT_POST,
             payload: postId
         })
     }
 
-    // edita o modifica una post
-    const actualizarPost = async post => {
+    // edita un post
+    const updatePost = async post => {
         try {
             const url = `https://jsonplaceholder.typicode.com/posts/${post.id}`;
-            const resultado = await clienteAxios.put(url, post);
+            const result = await clienteAxios.put(url, post);
 
-            const alerta = {
+            const alert = {
                 msg: 'Post editado exitosamente',
-                categoria: 'alerta-ok'
+                category: 'alert-ok'
             }
             
             dispatch({
-                type: POST_EXITOSO,
-                payload: alerta
+                type: POST_OK,
+                payload: alert
             })
             
             dispatch({
-                type: ACTUALIZAR_POST,
-                payload: resultado.data
+                type: UPDATE_POST,
+                payload: result.data
             })
         } catch (error) {
-            const alerta = {
+            const alert = {
                 msg: 'Hubo un error',
-                categoria: 'alerta-error'
+                category: 'alert-error'
             }
             dispatch({
                 type: POST_ERROR,
-                payload: alerta
+                payload: alert
             })
         }
 
-        // Limpia la alerta después de 3 segundos
         setTimeout(() => {
             dispatch({
-                type: OCULTAR_ALERTA
+                type: HIDE_ALERT
             })
         }, timeOut); 
     }
 
     // elimina un post
-    const eliminarPost = async postId => {
+    const deletePost = async postId => {
         try {
             const url = `https://jsonplaceholder.typicode.com/posts/:${postId}`;
 
             await clienteAxios.delete(url);
             
-            const alerta = {
+            const alert = {
                 msg: 'Post eliminado exitosamente',
-                categoria: 'alerta-ok'
+                category: 'alert-ok'
             }
             
             dispatch({
-                type: POST_EXITOSO,
-                payload: alerta
+                type: POST_OK,
+                payload: alert
             })
 
             dispatch({
-                type: ELIMINAR_POST,
+                type: DELETE_POST,
                 payload: postId
             })
                         
         } catch (error) {
-            const alerta = {
+            const alert = {
                 msg: 'Hubo un error',
-                categoria: 'alerta-error'
+                category: 'alert-error'
             }
             dispatch({
                 type: POST_ERROR,
-                payload: alerta
+                payload: alert
             })
         }
 
-        // Limpia la alerta después de 3 segundos
         setTimeout(() => {
             dispatch({
-                type: OCULTAR_ALERTA
+                type: HIDE_ALERT
             })
         }, timeOut); 
     }
@@ -208,13 +204,13 @@ const PostState = props => {
             value={{
                 posts: state.posts,
                 post: state.post,
-                mensaje: state.mensaje,
-                obtenerPosts,
-                obtenerPost,
-                agregarPost,
-                postActual,
-                actualizarPost,
-                eliminarPost
+                message: state.message,
+                getPosts,
+                getPost,
+                createPost,
+                selectPost,
+                updatePost,
+                deletePost
             }}
         >
             {props.children}

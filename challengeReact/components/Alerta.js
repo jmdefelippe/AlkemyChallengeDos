@@ -1,9 +1,9 @@
  import React from 'react';
 
- const Alerta = ({ msg, categoria }) => {
+ const Alerta = ({ msg, category }) => {
 
      return ( 
-         <div className={`alerta ${categoria}`}>
+         <div className={`alert ${category}`}>
              { msg }
          </div>
       );
