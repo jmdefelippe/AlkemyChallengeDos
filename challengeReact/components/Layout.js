@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 const Layout = ({children}) => {
     
-    const title = "Alkemy Challenge JS";
+    const title = "Alkemy Challenge";
     
     return ( 
         <>

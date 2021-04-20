@@ -18,20 +18,35 @@ const editarPost = () => {
   const PostContext = useContext(postContext);
   let { mensaje, post, actualizarPost } = PostContext;
 
-  //post = post || [{}];
+  post[0] = post[0] || [{}];
 
   useEffect(() => {
  
-    if ((mensaje.categoria === 'alerta-ok') || ( post[0].id === undefined ) ) {
-      router.push('/');
-    }
+      if ( ( post[0].userId === undefined ) ) {
+          Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'No existe el post indicado',
+              width: 400,
+              timer: 3000,
+              confirmButtonColor: '#60A5FA',
+              confirmButtonText: 'Ok!',
+          })
+
+          router.push('/');
+      }
+
+      if (mensaje.categoria === 'alerta-ok') {
+          router.push('/');
+      }
   
-    // eslint-disable-next-line
+      // eslint-disable-next-line
   }, [mensaje, post]);
 
   // Formulario y validación con formik y Yup
   const formik = useFormik({
       initialValues: {
+        userId: post[0].userId,
         id: post[0].id,
         title: post[0].title,
         body: post[0].body
@@ -50,7 +65,8 @@ const editarPost = () => {
   return (
       <Layout>
         <div className="md:w-4/5 xl:w-3/5 mx-auto">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-black-500 text-center my-4">Editar Post</h2>
+
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-blue-500 text-center my-4">Editar Post</h2>
 
           <div className="flex justify-center mt-5">
               <div className="w-full max-w-lg">

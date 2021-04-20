@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+import Swal from 'sweetalert2';
+
 import Layout from '../components/Layout';
 import ListadoPosts from '../components/ListadoPosts';
 
@@ -13,7 +15,23 @@ const Index = () => {
 
     // extraer posts de state inicial
     const postsContext = useContext(postContext);
-    const { posts } = postsContext;
+    const { posts, mensaje } = postsContext;
+
+    useEffect(() => {
+      
+      if (mensaje.categoria === 'alerta-ok') {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: mensaje.msg,
+            width: 400,
+            timer: 3000,
+            confirmButtonColor: '#60A5FA',
+            confirmButtonText: 'Ok!',
+        })
+    }
+      // eslint-disable-next-line
+  }, [mensaje]);
 
     return ( 
         <div>
@@ -21,7 +39,7 @@ const Index = () => {
             <Layout>
                 <div className="md:w-4/5 xl:w-4/5 mx-auto">
                   
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-black-500 text-center my-4"
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-blue-500 text-center my-4"
                   >Listado de Posts
                       
                   </h3>

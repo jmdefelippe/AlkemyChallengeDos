@@ -22,7 +22,7 @@ const ListadoPosts = () => {
                 ) : (  
                     <div className="bg-gray-300 rounded-lg px-5 py-2">
                         {posts.map(post => 
-                            <div key={post._id} className=""> <Post post={post}/></div>
+                            <div key={post.id} className=""> <Post post={post}/></div>
                         )}
                     </div>
                 )

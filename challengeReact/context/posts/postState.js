@@ -4,6 +4,7 @@ import postContext from './postContext';
 import postReducer from './postReducer';
 import {
     OBTENER_POSTS,
+    OBTENER_POST,
     AGREGAR_POST,
     POST_EXITOSO,
     POST_ERROR,
@@ -36,6 +37,28 @@ const PostState = props => {
             
             dispatch({
                 type: OBTENER_POSTS,
+                payload: resultado.data
+            });
+        } catch (error) {
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: POST_ERROR,
+                payload: alerta
+            })
+        }
+    }
+
+    // obtener post por id
+    const obtenerPost = async id => {
+        try {
+            const url = `https://jsonplaceholder.typicode.com/posts/${id}`;
+            const resultado = await clienteAxios.get(url);
+            
+            dispatch({
+                type: OBTENER_POST,
                 payload: resultado.data
             });
         } catch (error) {
@@ -103,11 +126,9 @@ const PostState = props => {
     // edita o modifica una post
     const actualizarPost = async post => {
         try {
-            const url = `https://jsonplaceholder.typicode.com/posts/:${post.id}`;
-            const resultado = await clienteAxios.post(url, post);
-            
-//            const resultado = await clienteAxios.put(`/api/posts/${post.id}`, post);
-            
+            const url = `https://jsonplaceholder.typicode.com/posts/${post.id}`;
+            const resultado = await clienteAxios.put(url, post);
+
             const alerta = {
                 msg: 'Post editado exitosamente',
                 categoria: 'alerta-ok'
@@ -120,7 +141,7 @@ const PostState = props => {
             
             dispatch({
                 type: ACTUALIZAR_POST,
-                payload: resultado.data.post
+                payload: resultado.data
             })
         } catch (error) {
             const alerta = {
@@ -189,6 +210,7 @@ const PostState = props => {
                 post: state.post,
                 mensaje: state.mensaje,
                 obtenerPosts,
+                obtenerPost,
                 agregarPost,
                 postActual,
                 actualizarPost,

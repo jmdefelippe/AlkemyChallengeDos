@@ -12,12 +12,12 @@ const Post = ({ post }) => {
 
     // obtener la función del context de posts
     const postsContext = useContext(postContext);
-    const { eliminarPost, postActual, } = postsContext;
+    const { obtenerPost, postActual, eliminarPost } = postsContext;
 
-    const { userId, id, title, body } = post;
+    const { id, title } = post;
  
-    const detallesPost = post => {
-        postActual(post);
+    const detallesPost = id => {
+        obtenerPost(id);
         router.push('/detalle');
     }
 

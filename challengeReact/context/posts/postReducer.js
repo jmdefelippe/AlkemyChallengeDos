@@ -1,5 +1,6 @@
 import {
     OBTENER_POSTS,
+    OBTENER_POST,
     AGREGAR_POST,
     POST_EXITOSO,
     OCULTAR_ALERTA,
@@ -15,6 +16,11 @@ export default (state, action) => {
             return {
                 ...state,
                 posts: action.payload
+            }
+        case OBTENER_POST:
+            return {
+                ...state,
+                post: action.payload
             }
         case AGREGAR_POST:
             return {
