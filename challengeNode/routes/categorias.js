@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
-const categoriasController = require('../controllers/categoriasController');
+const categoriaController = require('../controllers/categoriaController');
 
 // api/categorias
-router.get('/', categoriasController.obtenerCategorias);
+router.get('/', categoriaController.obtenerCategorias);
 
 module.exports = router;

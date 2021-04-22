@@ -1,10 +1,9 @@
-const Categorias = require('../models/Categorias');
+const Categoria = require('../models/Categoria');
 
 exports.obtenerCategorias = async (req, res) => {
     try {
-        const categorias = await Categorias.findAll();
+        const categorias = await Categoria.findAll();
 
-//        const posts = await Post.find({ usuario: req.usuario.id }).sort({ fecha: -1 });
         res.json({ categorias });            
     } catch (error) {
         console.log(error);
