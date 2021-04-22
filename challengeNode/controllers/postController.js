@@ -89,7 +89,6 @@ exports.crearPost = async (req, res) => {
 
         const categoria = await obtenerCategoria(req.body.categoria);
 
-        // crear un nuevo post
         let post = new Post({ ...req.body, categoriaId: categoria.id });
 
         await post.save();
@@ -115,13 +114,6 @@ exports.editarPost = async(req, res) => {
     nuevoPost.contenido = contenido == nuevoPost.contenido ? nuevoPost.contenido : contenido
     nuevoPost.imagen = imagen == nuevoPost.imagen ? nuevoPost.imagen : imagen
     nuevoPost.fecha_creacion = fecha_creacion == nuevoPost.fecha_creacion ? nuevoPost.fecha_creacion : fecha_creacion
-
-/*
-    if (titulo) { nuevoPost.titulo = titulo; }
-    if (contenido) { nuevoPost.contenido = contenido; }
-    if (imagen) { nuevoPost.imagen = imagen; }
-    if (fecha_creacion) { nuevoPost.fecha_creacion = fecha_creacion; }
-*/
 
     try {
         
